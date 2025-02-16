@@ -1,0 +1,25 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - langfusePublicKey
+      - langfuseSecretKey
+    properties:
+      langfusePublicKey:
+        type: string
+        description: The public key for accessing Langfuse API.
+      langfuseSecretKey:
+        type: string
+        description: The secret key for accessing Langfuse API.
+      langfuseBaseurl:
+        type: string
+        default: https://cloud.langfuse.com
+        description: The base URL for Langfuse API.
+  commandFunction:
+    # A function that produces the CLI command to start the MCP on stdio.
+    |-
+    (config) => ({ command: 'node', args: ['build/index.js'], env: { LANGFUSE_PUBLIC_KEY: config.langfusePublicKey, LANGFUSE_SECRET_KEY: config.langfuseSecretKey, LANGFUSE_BASEURL: config.langfuseBaseurl } })

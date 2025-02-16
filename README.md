@@ -1,5 +1,7 @@
 # Langfuse Prompt Management MCP Server
 
+[![smithery badge](https://smithery.ai/badge/@langfuse/mcp-server-langfuse)](https://smithery.ai/server/@langfuse/mcp-server-langfuse)
+
 [Model Context Protocol](https://github.com/modelcontextprotocol) (MCP) Server for [Langfuse Prompt Management](https://langfuse.com/docs/prompts/get-started). This server allows you to access and manage your Langfuse prompts through the Model Context Protocol.
 
 ## Demo
@@ -60,6 +62,14 @@ npm run build
 ```
 
 ### Step 2: Add the server to your MCP servers:
+
+#### Installing via Smithery
+
+To install Langfuse Prompts for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@langfuse/mcp-server-langfuse):
+
+```bash
+npx -y @smithery/cli install @langfuse/mcp-server-langfuse --client claude
+```
 
 #### Claude Desktop
 
