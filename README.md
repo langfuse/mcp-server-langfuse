@@ -103,3 +103,18 @@ The MCP Server is a work in progress and has some limitations:
 - List operations require fetching each prompt individually in the background to extract the arguments, this works but is not efficient
 
 Contributions are welcome! Please open an issue or a PR ([repo](https://github.com/langfuse/mcp-server-langfuse)) if you have any suggestions or feedback.
+
+## Release
+
+This project uses [release-it](https://github.com/release-it/release-it) to handle version management and publishing.
+
+To create a new release:
+
+1. Make sure you're on the main branch and your changes are committed
+2. Run `npm run release`
+3. Follow the prompts to choose the new version
+4. The tool will automatically:
+   - Update the version in package.json
+   - Create a git tag
+   - Push the changes and tag to GitHub
+   - Publish to npm

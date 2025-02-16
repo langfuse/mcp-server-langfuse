@@ -1,11 +1,11 @@
 {
-  "name": "mcp-server-langfuse",
-  "version": "0.0.1",
+  "name": "langfuse-mcp-server",
+  "version": "0.0.2-rc.0",
   "description": "A MCP Server for Langfuse Prompt Management",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "mcp-server-langfuse": "./build/index.js"
+    "langfuse-mcp-server": "./build/index.js"
   },
   "scripts": {
     "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\""
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.4",
+    "release-it": "^18.1.2",
     "typescript": "^5.7.3"
   },
   "repository": {
@@ -33,5 +34,26 @@
     "management"
   ],
   "author": "marcklingen",
-  "license": "MIT"
+  "license": "MIT",
+  "release-it": {
+    "hooks": {
+      "before:release": "npm run build"
+    },
+    "git": {
+      "commitMessage": "chore: release v${version}",
+      "tagName": "v${version}",
+      "commitArgs": [
+        "--no-verify"
+      ],
+      "pushArgs": [
+        "--no-verify"
+      ]
+    },
+    "github": {
+      "release": true,
+      "web": true,
+      "autoGenerate": true,
+      "releaseName": "v${version}"
+    }
+  }
 }
