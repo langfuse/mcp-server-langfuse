@@ -37,6 +37,12 @@ To increase compatibility with other MCP clients that do not support the prompt 
 - `get-prompt`: Retrieve and compile a specific prompt
   - Required `name` parameter: Name of the prompt to retrieve
   - Optional `arguments` parameter: JSON object with prompt variables
+- `get-trace`: Retrieve Langfuse trace data, optionally filtering by observation name or index.
+  - Required `traceId` parameter: The ID of the trace to retrieve.
+  - Optional `function_name` parameter: Filter observations by exact name. If multiple matches are found, their trace-level indices are returned.
+  - Optional `index` parameter: Retrieve a specific observation by its trace-level index (0-based). `function_name` and `index` are mutually exclusive.
+  - Caching: Fetched traces are cached locally in the `cache_data/` directory (ignored by git) to speed up subsequent requests for the same trace.
+  - Size Limit: If no filter (`function_name` or `index`) is provided and the full trace data exceeds 40 KB, a summary of the trace structure (observation names and indices) is returned instead of the full content to prevent excessive output.
 
 ## Development
 
