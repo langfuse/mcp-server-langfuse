@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/langfuse-mcp-server-langfuse-badge.png)](https://mseep.ai/app/langfuse-mcp-server-langfuse)
+
 # Langfuse Prompt Management MCP Server
 
 [Model Context Protocol](https://github.com/modelcontextprotocol) (MCP) Server for [Langfuse Prompt Management](https://langfuse.com/docs/prompts/get-started). This server allows you to access and manage your Langfuse prompts through the Model Context Protocol.
