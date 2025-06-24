@@ -1,6 +1,6 @@
 {
   "name": "mcp-server-langfuse",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A MCP Server for Langfuse Prompt Management",
   "main": "index.js",
   "type": "module",

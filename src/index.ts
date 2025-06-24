@@ -20,7 +20,7 @@ const langfuse = new Langfuse();
 const server = new McpServer(
   {
     name: "langfuse-prompts",
-    version: "1.0.0",
+    version: "0.1.0",
   },
   {
     capabilities: {
@@ -210,6 +210,158 @@ server.tool(
     } catch (error) {
       return {
         content: [{ type: "text", text: "Error: " + error }],
+        isError: true,
+      };
+    }
+  }
+);
+
+server.tool(
+  "update-prompt",
+  "Create a new prompt version or update labels on an existing version. Can promote to production.",
+  {
+    name: z.string().describe("Name of the prompt to create or update"),
+    prompt: z
+      .union([
+        z.string(),
+        z.array(
+          z.object({
+            role: z
+              .string()
+              .describe("Role of the message (system, user, assistant)"),
+            content: z.string().describe("Content of the message"),
+          })
+        ),
+      ])
+      .optional()
+      .describe(
+        "The prompt content. For text prompts, provide a string. For chat prompts, provide an array of message objects with role and content. Required when creating new versions, omit when only updating labels."
+      ),
+    version: z
+      .number()
+      .optional()
+      .describe(
+        "Specific version number to update labels on. If provided, only labels will be updated. If omitted, creates a new version."
+      ),
+    type: z
+      .enum(["text", "chat"])
+      .optional()
+      .default("text")
+      .describe(
+        "Type of prompt - 'text' for simple text prompts or 'chat' for conversation-style prompts"
+      ),
+    config: z
+      .record(z.any())
+      .optional()
+      .describe(
+        "Optional configuration object for model parameters (e.g., temperature, model name, etc.)"
+      ),
+    labels: z
+      .array(z.string())
+      .optional()
+      .describe(
+        "Labels to assign to this prompt version (e.g., ['staging', 'production'])"
+      ),
+    tags: z
+      .array(z.string())
+      .optional()
+      .describe("Tags to categorize the prompt"),
+  },
+  async (args) => {
+    try {
+      // Prepare labels, adding 'production' if requested
+      let finalLabels = args.labels
+        ? [...args.labels, "production"]
+        : ["production"];
+
+      let result;
+      let isNewVersion = false;
+
+      // If version is specified, update labels on existing version
+      if (args.version !== undefined) {
+        result = await langfuse.updatePrompt({
+          name: args.name,
+          version: args.version,
+          newLabels: finalLabels,
+        });
+      } else {
+        // Create new version
+        if (!args.prompt) {
+          throw new Error(
+            "Prompt content is required when creating new versions"
+          );
+        }
+
+        isNewVersion = true;
+
+        if (args.type === "chat") {
+          // Handle chat prompts
+          if (typeof args.prompt === "string") {
+            throw new Error(
+              "For chat prompts, prompt must be an array of message objects"
+            );
+          }
+          result = await langfuse.createPrompt({
+            name: args.name,
+            prompt: args.prompt,
+            type: "chat",
+            config: args.config,
+            labels: finalLabels,
+            tags: args.tags,
+          });
+        } else {
+          // Handle text prompts
+          if (typeof args.prompt !== "string") {
+            throw new Error("For text prompts, prompt must be a string");
+          }
+          result = await langfuse.createPrompt({
+            name: args.name,
+            prompt: args.prompt,
+            type: "text",
+            config: args.config,
+            labels: finalLabels,
+            tags: args.tags,
+          });
+        }
+      }
+
+      const message = isNewVersion
+        ? `Prompt '${args.name}' ${
+            finalLabels.includes("production")
+              ? "created and promoted to production"
+              : "created successfully"
+          }`
+        : `Prompt '${args.name}' version ${args.version} ${
+            finalLabels.includes("production")
+              ? "promoted to production"
+              : "labels updated successfully"
+          }`;
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                success: true,
+                message: message,
+                promptName: args.name,
+                version: args.version || "New version created",
+                labels: finalLabels,
+                operation: isNewVersion ? "create" : "update_labels",
+                deployedTo: finalLabels.includes("production")
+                  ? "production"
+                  : "staging",
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    } catch (error) {
+      return {
+        content: [{ type: "text", text: `Error updating prompt: ${error}` }],
         isError: true,
       };
     }

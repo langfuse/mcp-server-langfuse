@@ -1,6 +1,6 @@
 # Langfuse Prompt Management MCP Server
 
-[Model Context Protocol](https://github.com/modelcontextprotocol) (MCP) Server for [Langfuse Prompt Management](https://langfuse.com/docs/prompts/get-started). This server allows you to access and manage your Langfuse prompts through the Model Context Protocol.
+[Model Context Protocol](https://github.com/modelcontextprotocol) (MCP) Server for [Langfuse Prompt Management](https://langfuse.com/docs/prompts/get-started). This server allows you to access, create, update, and manage your Langfuse prompts through the Model Context Protocol.
 
 ## Demo
 
@@ -37,6 +37,16 @@ To increase compatibility with other MCP clients that do not support the prompt 
 - `get-prompt`: Retrieve and compile a specific prompt
   - Required `name` parameter: Name of the prompt to retrieve
   - Optional `arguments` parameter: JSON object with prompt variables
+
+- `update-prompt`: Create new prompt versions or update existing ones, with production promotion
+  - Required `name` parameter: Name of the prompt to create or update
+  - Optional `prompt` parameter: The prompt content (string for text prompts, array of message objects for chat prompts). Required when creating new versions, omit when only updating labels.
+  - Optional `version` parameter: Specific version number to update labels on. If provided, only labels will be updated. If omitted, creates a new version.
+  - Optional `type` parameter: Type of prompt ("text" or "chat", defaults to "text")
+  - Optional `config` parameter: Configuration object for model parameters (e.g., temperature, model name)
+  - Optional `labels` parameter: Array of labels to assign to this prompt version (e.g., ["staging", "production"])
+  - Optional `tags` parameter: Array of tags to categorize the prompt
+  - Optional `promoteToProduction` parameter: Boolean to automatically add "production" label (defaults to false)
 
 ## Development
 
