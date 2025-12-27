@@ -12,6 +12,7 @@ import {
 import { Langfuse, ChatPromptClient } from "langfuse";
 import { extractVariables } from "./utils.js";
 import { z } from "zod";
+import { registerAllObservabilityTools } from "./tools/index.js";
 
 // Requires Environment Variables
 const langfuse = new Langfuse();
@@ -19,7 +20,7 @@ const langfuse = new Langfuse();
 // Create MCP server instance with a "prompts" capability.
 const server = new McpServer(
   {
-    name: "langfuse-prompts",
+    name: "langfuse",
     version: "1.0.0",
   },
   {
@@ -28,6 +29,9 @@ const server = new McpServer(
     },
   }
 );
+
+// Register observability tools (traces, observations, scores, datasets, sessions)
+registerAllObservabilityTools(server, langfuse);
 
 async function listPromptsHandler(
   request: ListPromptsRequest
@@ -219,7 +223,8 @@ server.tool(
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Langfuse Prompts MCP Server running on stdio");
+  console.error("Langfuse MCP Server running on stdio");
+  console.error("24 tools registered (2 prompt tools + 22 observability tools)");
 }
 
 main().catch((error) => {

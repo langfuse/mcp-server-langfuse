@@ -1,6 +1,6 @@
-# Langfuse Prompt Management MCP Server
+# Langfuse MCP Server
 
-[Model Context Protocol](https://github.com/modelcontextprotocol) (MCP) Server for [Langfuse Prompt Management](https://langfuse.com/docs/prompts/get-started). This server allows you to access and manage your Langfuse prompts through the Model Context Protocol.
+[Model Context Protocol](https://github.com/modelcontextprotocol) (MCP) Server for [Langfuse](https://langfuse.com). This server provides access to Langfuse prompt management and observability features through the Model Context Protocol.
 
 ## Demo
 
@@ -37,6 +37,51 @@ To increase compatibility with other MCP clients that do not support the prompt 
 - `get-prompt`: Retrieve and compile a specific prompt
   - Required `name` parameter: Name of the prompt to retrieve
   - Optional `arguments` parameter: JSON object with prompt variables
+
+### Observability Tools (22 tools)
+
+Tools for accessing Langfuse observability data (traces, observations, scores, datasets, sessions).
+
+#### Traces
+
+- `list-traces`: List traces with filtering (name, userId, sessionId, tags, timestamps)
+- `get-trace`: Get a specific trace with observations and scores
+  - Optional `includeIO` parameter to include input/output fields (disabled by default to reduce response size)
+
+#### Observations
+
+- `list-observations`: List observations (generations, spans, events) with filtering
+- `get-observation`: Get a specific observation by ID
+
+#### Scores
+
+- `create-score`: Create a score for a trace or observation (numeric, boolean, or categorical)
+- `list-scores`: List scores with filtering (name, userId, source, dataType, value comparison)
+- `get-score`: Get a specific score by ID
+- `delete-score`: Delete a score
+
+#### Score Configs
+
+- `create-score-config`: Create a score configuration template
+- `list-score-configs`: List all score configurations
+- `get-score-config`: Get a specific score configuration
+
+#### Datasets
+
+- `create-dataset`: Create a new dataset
+- `list-datasets`: List all datasets
+- `get-dataset`: Get a dataset by name
+- `create-dataset-item`: Create or update a dataset item
+- `list-dataset-items`: List items in a dataset
+- `get-dataset-item`: Get a specific dataset item
+- `create-dataset-run-item`: Link a trace to a dataset item for evaluation
+- `list-dataset-runs`: List runs for a dataset
+- `get-dataset-run`: Get a specific dataset run
+
+#### Sessions
+
+- `list-sessions`: List all sessions
+- `get-session`: Get a session with its traces
 
 ## Development
 
