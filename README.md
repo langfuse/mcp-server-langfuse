@@ -8,6 +8,10 @@ Quick demo of Langfuse Prompts MCP in Claude Desktop (_unmute for voice-over exp
 
 https://github.com/user-attachments/assets/61da79af-07c2-4f69-b28c-ca7c6e606405
 
+## Hosted deployment
+
+A hosted deployment is available on [Fronteir AI](https://fronteir.ai/mcp/langfuse-mcp-server-langfuse).
+
 ## Features
 
 ### MCP Prompt
