@@ -94,6 +94,28 @@ Add new server to Cursor:
   LANGFUSE_PUBLIC_KEY="your-public-key" LANGFUSE_SECRET_KEY="your-secret-key" LANGFUSE_BASEURL="https://cloud.langfuse.com" node absolute-path/build/index.js
   ```
 
+#### Kiro
+
+Add the server to your Kiro MCP configuration. Use `.kiro/settings/mcp.json` for a single workspace, or `~/.kiro/settings/mcp.json` to make it available across all workspaces.
+
+```json
+{
+  "mcpServers": {
+    "langfuse": {
+      "command": "node",
+      "args": ["<absolute-path>/build/index.js"],
+      "env": {
+        "LANGFUSE_PUBLIC_KEY": "${LANGFUSE_PUBLIC_KEY}",
+        "LANGFUSE_SECRET_KEY": "${LANGFUSE_SECRET_KEY}",
+        "LANGFUSE_BASEURL": "https://cloud.langfuse.com"
+      }
+    }
+  }
+}
+```
+
+Replace `<absolute-path>` with the full path to your cloned repository, and set `LANGFUSE_PUBLIC_KEY` and `LANGFUSE_SECRET_KEY` in your environment with your actual Langfuse API keys. Kiro only expands environment variables that are explicitly approved: open Kiro settings, search for "Mcp Approved Env Vars", and add `LANGFUSE_PUBLIC_KEY` and `LANGFUSE_SECRET_KEY`. Save the config file and the server will be available in Kiro.
+
 ## Limitations
 
 The MCP Server is a work in progress and has some limitations:
