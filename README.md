@@ -96,6 +96,81 @@ Add new server to Cursor:
   LANGFUSE_PUBLIC_KEY="your-public-key" LANGFUSE_SECRET_KEY="your-secret-key" LANGFUSE_BASEURL="https://cloud.langfuse.com" node absolute-path/build/index.js
   ```
 
+#### VS Code
+
+For one-click installation, click one of the install buttons below:
+
+[![Install with NPX in VS Code](https://img.shields.io/badge/VS_Code-NPM-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=langfuse&config=%7B%22command%22%3A%22node%22%2C%22args%22%3A%5B%22build%2Findex.js%22%5D%2C%22env%22%3A%7B%22LANGFUSE_PUBLIC_KEY%22%3A%22%24%7Binput%3Apublic_key%7D%22%2C%22LANGFUSE_SECRET_KEY%22%3A%22%24%7Binput%3Asecret_key%7D%22%2C%22LANGFUSE_BASEURL%22%3A%22https%3A%2F%2Fcloud.langfuse.com%22%7D%7D&inputs=%5B%7B%22type%22%3A%22promptString%22%2C%22id%22%3A%22public_key%22%2C%22description%22%3A%22Langfuse+Public+Key%22%2C%22password%22%3Atrue%7D%2C%7B%22type%22%3A%22promptString%22%2C%22id%22%3A%22secret_key%22%2C%22description%22%3A%22Langfuse+Secret+Key%22%2C%22password%22%3Atrue%7D%5D) [![Install with NPX in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-NPM-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=langfuse&config=%7B%22command%22%3A%22node%22%2C%22args%22%3A%5B%22build%2Findex.js%22%5D%2C%22env%22%3A%7B%22LANGFUSE_PUBLIC_KEY%22%3A%22%24%7Binput%3Apublic_key%7D%22%2C%22LANGFUSE_SECRET_KEY%22%3A%22%24%7Binput%3Asecret_key%7D%22%2C%22LANGFUSE_BASEURL%22%3A%22https%3A%2F%2Fcloud.langfuse.com%22%7D%7D&inputs=%5B%7B%22type%22%3A%22promptString%22%2C%22id%22%3A%22public_key%22%2C%22description%22%3A%22Langfuse+Public+Key%22%2C%22password%22%3Atrue%7D%2C%7B%22type%22%3A%22promptString%22%2C%22id%22%3A%22secret_key%22%2C%22description%22%3A%22Langfuse+Secret+Key%22%2C%22password%22%3Atrue%7D%5D&quality=insiders)
+
+You can also install manually by adding the following configuration to your VS Code settings. Click the install buttons above for an automated setup.
+
+Add the following JSON block to your User Settings (JSON) file in VS Code. You can do this by pressing `Ctrl + Shift + P` and typing `Preferences: Open User Settings (JSON)`.
+
+```json
+{
+  "mcp": {
+    "inputs": [
+      {
+        "type": "promptString",
+        "id": "public_key",
+        "description": "Langfuse Public Key",
+        "password": true
+      },
+      {
+        "type": "promptString",
+        "id": "secret_key",
+        "description": "Langfuse Secret Key",
+        "password": true
+      }
+    ],
+    "servers": {
+      "langfuse": {
+        "command": "node",
+        "args": ["build/index.js"],
+        "env": {
+          "LANGFUSE_PUBLIC_KEY": "${input:public_key}",
+          "LANGFUSE_SECRET_KEY": "${input:secret_key}",
+          "LANGFUSE_BASEURL": "https://cloud.langfuse.com"
+        }
+      }
+    }
+  }
+}
+```
+
+Optionally, you can add it to a file called `.vscode/mcp.json` in your workspace:
+
+```json
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "public_key",
+      "description": "Langfuse Public Key",
+      "password": true
+    },
+    {
+      "type": "promptString",
+      "id": "secret_key",
+      "description": "Langfuse Secret Key",
+      "password": true
+    }
+  ],
+  "servers": {
+    "langfuse": {
+      "command": "node",
+      "args": ["build/index.js"],
+      "env": {
+        "LANGFUSE_PUBLIC_KEY": "${input:public_key}",
+        "LANGFUSE_SECRET_KEY": "${input:secret_key}",
+        "LANGFUSE_BASEURL": "https://cloud.langfuse.com"
+        }
+      }
+    }
+  }
+}
+```
+
 ## Limitations
 
 The MCP Server is a work in progress and has some limitations:
