@@ -1,3 +1,5 @@
+> **This repository is replaced by the Langfuse MCP server.** The Langfuse MCP server is built into Langfuse at `https://cloud.langfuse.com/api/public/mcp`, with the same path on the US, Japan, HIPAA and self-hosted deployments. It covers prompts, traces and observations, scores, datasets and experiments, evaluators and annotation queues, with read and write tools. Setup: <https://langfuse.com/docs/api-and-data-platform/features/mcp-server>
+
 # Langfuse Prompt Management MCP Server
 
 [Model Context Protocol](https://github.com/modelcontextprotocol) (MCP) Server for [Langfuse Prompt Management](https://langfuse.com/docs/prompts/get-started). This server allows you to access and manage your Langfuse prompts through the Model Context Protocol.
